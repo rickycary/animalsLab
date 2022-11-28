@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
+const AnimalRouter = require("./controllers/animal")
 //===========================================
 
 // Application Object
@@ -25,6 +26,8 @@ app.use("/static", express.static("public"))
 app.get("/", (req, res) => {
     res.send("Server is working")
 })
+
+app.use("/animal", AnimalRouter)
 //===========================================
 
 // Listeners 
