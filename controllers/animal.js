@@ -45,11 +45,12 @@ router.delete("/:id", async(req, res) => {
 
 // Update Route - Put
 router.put("/:id", async (req, res) => {
+    // Make sure extinct is true or false
     req.body.extinct = Boolean(req.body.extinct)
-    await Animal.findByIdAndUpdate(req.params.id, req.body).catch((error) => errorHandler(error, res))
+    // Update the animal
+    await Animal.findByIdAndUpdate(req.params.id, req.body)
     // Redirect to index
     res.redirect("/animal")
-
 })
 
 // Create Route - Post
@@ -65,12 +66,12 @@ router.post("/", async (req, res) => {
 // Edit Route - Get
 router.get("/:id/edit", async (req, res) => {
     const animal = await Animal.findById(req.params.id).catch((error) => errorHandler(error, res))
-    res.render("/animal.edit.ejs", {animal})
+    res.render("animal/edit.ejs", {animal})
 })
 
 // Show Route - Get
 router.get("/:id", async(req, res) => {
-    const animal = await Animal.findById(req.params.id)
+    const animal = await Animal.findById(req.params.id).catch((error) => errorHandler(error, res))
     res.render("animal/show.ejs", {animal})
 })
 //====================================
