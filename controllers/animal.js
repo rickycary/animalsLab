@@ -39,20 +39,34 @@ router.get("/new", (req, res) => {
 
 // Delete/Destroy Route - Delete
 router.delete("/:id", async(req, res) => {
-    await Animal.findByIdAndRemove(req.params.id)
+    await Animal.findByIdAndRemove(req.params.id).catch((error) => errorHandler(error, res))
     res.redirect("/animal")
 })
 
 // Update Route - Put
+router.put("/:id", async (req, res) => {
+    req.body.extinct = Boolean(req.body.extinct)
+    await Animal.findByIdAndUpdate(req.params.id, req.body).catch((error) => errorHandler(error, res))
+    // Redirect to index
+    res.redirect("/animal")
+
+})
 
 // Create Route - Post
 router.post("/", async (req, res) => {
+    // Make sure extinct is true or false 
     req.body.extinct = Boolean(req.body.extinct)
+    // Create the animal
     await Animal.create(req.body).catch((error) => errorHandler(error, res))
+    // redirect back to the index
     res.redirect("/animal")
 })
 
 // Edit Route - Get
+router.get("/:id/edit", async (req, res) => {
+    const animal = await Animal.findById(req.params.id).catch((error) => errorHandler(error, res))
+    res.render("/animal.edit.ejs", {animal})
+})
 
 // Show Route - Get
 router.get("/:id", async(req, res) => {

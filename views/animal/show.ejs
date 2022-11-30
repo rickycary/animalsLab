@@ -1,10 +1,15 @@
 <h1><%= animal.name %></h1>
-<h2>Extinct: <%= animal.extinct ? "Yes" : "No" %></h2>
-<h3>LOCATION: <%= animal.location %></h3>
-<h4>LIFE EXPECTANCY: <%= animal.lifeExpectancy %></h4>
+
+<h2>Extinct: <%= animal.extinct ? "Yes" : "No" %> </h2>
+
+<h2>LOCATION: <%= animal.location %></h2>
+
+<h2>LIFE EXPECTANCY: <%= animal.lifeExpectancy %></h2>
 
 <form action="/animal/<%= animal._id %>?_method=DELETE" method="post">
     <input type="submit" value="Delete">
 </form>
+
+<a href="/animal/<%= animal._id %>/edit"><button>Edit</button></a>
 
 <a href="/animal">Back to main page</a>
