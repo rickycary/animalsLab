@@ -33,12 +33,24 @@ router.get("/", async(req, res) => {
 });
 
 // New Route - GET
+router.get("/new", (req, res) => {
+    res.render("animal/new.ejs")
+})
 
 // Delete/Destroy Route - Delete
+router.delete("/:id", async(req, res) => {
+    await Animal.findByIdAndRemove(req.params.id)
+    res.redirect("/animal")
+})
 
 // Update Route - Put
 
 // Create Route - Post
+router.post("/", async (req, res) => {
+    req.body.extinct = Boolean(req.body.extinct)
+    await Animal.create(req.body).catch((error) => errorHandler(error, res))
+    res.redirect("/animal")
+})
 
 // Edit Route - Get
 
